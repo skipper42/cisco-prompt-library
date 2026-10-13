@@ -460,68 +460,159 @@
     }
 
     /* Top Action Bar & Segmented Pill Switch */
-    .top-action-bar {
+    /* -----------------------------------------------------------
+       High-Visibility Capability Mode Switcher (All / Agent / Chat)
+       ----------------------------------------------------------- */
+    .mode-control-wrapper {
       display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.45rem;
+    }
+
+    @media (max-width: 900px) {
+      .mode-control-wrapper {
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .mode-control-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.75rem;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .mode-control-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--meraki-green);
+      box-shadow: 0 0 8px var(--meraki-green-glow);
+      display: inline-block;
     }
 
     .mode-segmented-control {
       display: inline-flex;
-      background: rgba(0, 0, 0, 0.05);
-      padding: 0.25rem;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      padding: 0.35rem 0.4rem;
       border-radius: var(--radius-pill);
-      gap: 0.25rem;
-      border: 1px solid var(--border-subtle);
+      gap: 0.35rem;
+      border: 2px solid #cbd5e1;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
       max-width: 100%;
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+      transition: var(--transition);
     }
     .mode-segmented-control::-webkit-scrollbar { display: none; }
 
     [data-theme="dark"] .mode-segmented-control {
-      background: rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 2px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05);
     }
 
     .mode-pill-btn {
-      background: transparent;
-      border: none;
-      padding: 0.5rem 1.1rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 0.55rem 1.15rem;
       border-radius: var(--radius-pill);
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: var(--transition);
+      gap: 0.5rem;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       white-space: nowrap;
-      min-height: 38px;
+      min-height: 40px;
+      user-select: none;
     }
 
-    .mode-pill-btn:hover { color: var(--text-primary); }
+    [data-theme="dark"] .mode-pill-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+    }
 
-    .mode-pill-btn.active {
-      background: var(--bg-surface);
+    .mode-pill-btn:hover {
+      background: #ffffff;
       color: var(--text-primary);
-      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
-    .mode-pill-btn.agent-active { color: var(--apple-purple); }
-    .mode-pill-btn.chat-active { color: var(--apple-blue); }
+    [data-theme="dark"] .mode-pill-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Active Highlight 1: All Use Cases (Deep Slate / Meraki Dark Navy) */
+    .mode-pill-btn.active#mode-all-btn,
+    .mode-pill-btn#mode-all-btn.active {
+      background: linear-gradient(135deg, #131924 0%, #1e293b 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      box-shadow: 0 6px 18px rgba(19, 25, 36, 0.45), 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+      transform: translateY(-1px);
+    }
+    .mode-pill-btn.active#mode-all-btn .badge-count-pill,
+    .mode-pill-btn#mode-all-btn.active .badge-count-pill {
+      background: rgba(255, 255, 255, 0.22) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+    }
+
+    /* Active Highlight 2: Agent Skills (Vibrant Royal Purple Glow) */
+    .mode-pill-btn.agent-active,
+    .mode-pill-btn#mode-agent-btn.active {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.28) !important;
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5), 0 2px 6px rgba(109, 40, 217, 0.3) !important;
+      transform: translateY(-1px);
+    }
+    .mode-pill-btn.agent-active .badge-count-pill,
+    .mode-pill-btn#mode-agent-btn.active .badge-count-pill {
+      background: rgba(255, 255, 255, 0.28) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+    }
+
+    /* Active Highlight 3: Standard Chat (Vivid Cisco Webex Blue / Cyan Glow) */
+    .mode-pill-btn.chat-active,
+    .mode-pill-btn#mode-chat-btn.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.28) !important;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5), 0 2px 6px rgba(3, 105, 161, 0.3) !important;
+      transform: translateY(-1px);
+    }
+    .mode-pill-btn.chat-active .badge-count-pill,
+    .mode-pill-btn#mode-chat-btn.active .badge-count-pill {
+      background: rgba(255, 255, 255, 0.28) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+    }
 
     .badge-count-pill {
-      font-size: 0.7rem;
-      padding: 0.1rem 0.45rem;
+      font-size: 0.72rem;
+      padding: 0.12rem 0.5rem;
       border-radius: var(--radius-pill);
-      background: rgba(0, 0, 0, 0.06);
+      background: rgba(0, 0, 0, 0.08);
       color: var(--text-secondary);
       font-weight: 700;
+      transition: var(--transition);
     }
 
     [data-theme="dark"] .badge-count-pill {
@@ -529,7 +620,7 @@
       color: var(--text-primary);
     }
 
-    /* -----------------------------------------------------------
+/* -----------------------------------------------------------
        AI Tools Section (Page) - Requirement 1
        ----------------------------------------------------------- */
     .ai-tools-header { margin-bottom: 2rem; }
@@ -1218,23 +1309,115 @@
       box-shadow: 0 0 0 3px var(--apple-blue-light);
     }
 
+    /* -----------------------------------------------------------
+       High-Visibility "Generated Prompt for Webex" Showcase Box
+       (Non-white highlight background, elevated shadows & glowing accents)
+       ----------------------------------------------------------- */
     .studio-output-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
+      /* Default highlight: luminous Cisco tech cyan/blue gradient (never plain white) */
+      background: linear-gradient(165deg, #f0f7ff 0%, #e0f2fe 40%, #f8fafc 100%);
+      border: 2px solid #0284c7;
       border-radius: var(--radius-card);
-      padding: 1.75rem;
-      box-shadow: var(--shadow-modal);
+      padding: 1.85rem;
+      box-shadow: 0 18px 42px -4px rgba(2, 132, 199, 0.24), 0 8px 18px -2px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(2, 132, 199, 0.18);
       position: sticky;
       top: 2rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] .studio-output-box {
+      background: linear-gradient(165deg, #0d1726 0%, #091322 50%, #060d18 100%);
+      border: 2px solid rgba(4, 159, 217, 0.65);
+      box-shadow: 0 22px 50px -4px rgba(0, 0, 0, 0.8), 0 0 32px rgba(4, 159, 217, 0.22);
+    }
+
+    /* Specialized Mode 1: Agent Skill Output Box (Royal Violet Accent) */
+    .studio-output-box.agent-mode-box {
+      background: linear-gradient(165deg, #faf5ff 0%, #f3e8ff 45%, #ffffff 100%);
+      border: 2px solid #7c3aed;
+      box-shadow: 0 20px 46px -4px rgba(124, 58, 237, 0.28), 0 8px 20px -2px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(124, 58, 237, 0.22);
+    }
+
+    [data-theme="dark"] .studio-output-box.agent-mode-box {
+      background: linear-gradient(165deg, #1a0e30 0%, #120924 50%, #0a0416 100%);
+      border: 2px solid rgba(167, 139, 250, 0.7);
+      box-shadow: 0 22px 52px -4px rgba(0, 0, 0, 0.8), 0 0 35px rgba(139, 92, 246, 0.32);
+    }
+
+    /* Specialized Mode 2: Standard Chat Output Box (Vivid Cisco Blue Accent) */
+    .studio-output-box.chat-mode-box {
+      background: linear-gradient(165deg, #f0f9ff 0%, #e0f2fe 45%, #ffffff 100%);
+      border: 2px solid #0284c7;
+      box-shadow: 0 20px 46px -4px rgba(2, 132, 199, 0.28), 0 8px 20px -2px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(2, 132, 199, 0.22);
+    }
+
+    [data-theme="dark"] .studio-output-box.chat-mode-box {
+      background: linear-gradient(165deg, #091a2e 0%, #061324 50%, #030a14 100%);
+      border: 2px solid rgba(56, 189, 248, 0.7);
+      box-shadow: 0 22px 52px -4px rgba(0, 0, 0, 0.8), 0 0 35px rgba(2, 132, 199, 0.32);
     }
 
     @media (max-width: 980px) {
       .studio-output-box { position: static; }
     }
 
+    /* Output Box Header */
+    .output-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1.5px solid rgba(2, 132, 199, 0.16);
+    }
+
+    [data-theme="dark"] .output-box-header {
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .output-box-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .output-box-icon {
+      font-size: 1.35rem;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(2, 132, 199, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .studio-output-box.agent-mode-box .output-box-icon {
+      background: rgba(124, 58, 237, 0.14);
+    }
+
+    .output-box-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .output-box-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Terminal Code Display */
     .apple-code-display {
-      background: var(--code-bg);
-      color: var(--code-text);
+      background: #0b1120;
+      color: #f8fafc;
       padding: 1.35rem;
       border-radius: var(--radius-md);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -1244,56 +1427,88 @@
       word-break: break-word;
       max-height: 440px;
       overflow-y: auto;
-      margin-bottom: 1.25rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.35rem;
+      border: 2px solid rgba(56, 189, 248, 0.28);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.55), 0 6px 18px rgba(0, 0, 0, 0.2);
     }
 
+    /* Glowing Prompt Variable Highlighting */
     .code-param-badge {
-      background: rgba(4, 159, 217, 0.3);
-      color: #7dd3fc;
-      padding: 0.15rem 0.45rem;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.28) 0%, rgba(217, 119, 6, 0.35) 100%);
+      color: #fef08a;
+      padding: 0.18rem 0.5rem;
       border-radius: 4px;
-      font-weight: 600;
-      border-bottom: 1.5px solid var(--apple-blue);
+      font-weight: 700;
+      border: 1px solid rgba(245, 158, 11, 0.55);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.25);
     }
 
+    /* High-Impact Copy Action Button */
     .apple-copy-btn {
-      background: var(--apple-blue);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: #ffffff;
       border: none;
-      padding: 0.85rem 1.5rem;
+      padding: 0.92rem 1.75rem;
       border-radius: var(--radius-pill);
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      transition: var(--transition);
+      gap: 0.6rem;
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
       width: 100%;
       margin-bottom: 1.25rem;
-      min-height: 48px;
-      box-shadow: 0 4px 14px rgba(0, 113, 227, 0.28);
+      min-height: 50px;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.42), 0 2px 6px rgba(0, 0, 0, 0.15);
+      user-select: none;
     }
 
-    .apple-copy-btn:hover { background: var(--apple-blue-hover); transform: scale(1.01); }
-    .apple-copy-btn.copied { background: var(--meraki-green); }
+    .apple-copy-btn:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.52), 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
 
+    .apple-copy-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .apple-copy-btn.copied {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      box-shadow: 0 0 24px rgba(52, 199, 89, 0.65);
+    }
+
+    /* Guidance Callout Card */
     .apple-guidance-card {
-      background: var(--bg-subtle);
+      background: rgba(2, 132, 199, 0.07);
+      border: 1px solid rgba(2, 132, 199, 0.22);
+      border-left: 4px solid #0284c7;
       border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      font-size: 0.82rem;
+      padding: 1.05rem 1.25rem;
+      font-size: 0.83rem;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.55;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.06);
     }
 
-    .apple-guidance-card strong { color: var(--text-primary); }
-    .apple-guidance-card ol { margin-left: 1.25rem; margin-top: 0.4rem; }
-    .apple-guidance-card li { margin-bottom: 0.25rem; }
+    [data-theme="dark"] .apple-guidance-card {
+      background: rgba(4, 159, 217, 0.08);
+      border: 1px solid rgba(4, 159, 217, 0.25);
+      border-left: 4px solid #049fd9;
+      color: #94a3b8;
+    }
 
-    /* Toast */
+    .studio-output-box.agent-mode-box .apple-guidance-card {
+      background: rgba(124, 58, 237, 0.07);
+      border: 1px solid rgba(124, 58, 237, 0.22);
+      border-left: 4px solid #7c3aed;
+    }
+
+/* Toast */
     .apple-toast {
       position: fixed;
       bottom: 2rem;
@@ -1451,19 +1666,25 @@
         <p style="font-size: 0.85rem; color: var(--text-secondary);" id="view-sub">Select your role and drill down to fault-proof Webex agent prompts.</p>
       </div>
 
-      <div class="mode-segmented-control">
-        <button class="mode-pill-btn active" id="mode-all-btn" onclick="setCapabilityMode('all')">
-          <span>All Use Cases</span>
-          <span class="badge-count-pill">1666</span>
-        </button>
-        <button class="mode-pill-btn" id="mode-agent-btn" onclick="setCapabilityMode('agent_skill')">
-          <span>⚡ Agent Skills</span>
-          <span class="badge-count-pill" style="color: var(--apple-purple);">574</span>
-        </button>
-        <button class="mode-pill-btn" id="mode-chat-btn" onclick="setCapabilityMode('standard_chat')">
-          <span>💬 Standard Chat</span>
-          <span class="badge-count-pill" style="color: var(--apple-blue);">1092</span>
-        </button>
+      <div class="mode-control-wrapper">
+        <div class="mode-control-label">
+          <span class="mode-control-pulse"></span>
+          <span>Capability Scope:</span>
+        </div>
+        <div class="mode-segmented-control" role="tablist" aria-label="Prompt Execution Scope">
+          <button class="mode-pill-btn active" id="mode-all-btn" onclick="setCapabilityMode('all')" role="tab" aria-selected="true">
+            <span>All Use Cases</span>
+            <span class="badge-count-pill">1666</span>
+          </button>
+          <button class="mode-pill-btn" id="mode-agent-btn" onclick="setCapabilityMode('agent_skill')" role="tab" aria-selected="false">
+            <span>⚡ Agent Skills</span>
+            <span class="badge-count-pill" style="color: var(--apple-purple);">574</span>
+          </button>
+          <button class="mode-pill-btn" id="mode-chat-btn" onclick="setCapabilityMode('standard_chat')" role="tab" aria-selected="false">
+            <span>💬 Standard Chat</span>
+            <span class="badge-count-pill" style="color: var(--apple-blue);">1092</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1569,16 +1790,22 @@
           </div>
 
           <!-- Output -->
-          <div class="studio-output-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.15rem;">
-              <h3 style="font-size: 1.05rem; font-weight: 700;">Generated Prompt for Webex</h3>
+          <div class="studio-output-box chat-mode-box" id="wizard-output-box">
+            <div class="output-box-header">
+              <div class="output-box-title-group">
+                <span class="output-box-icon" id="output-box-icon">💬</span>
+                <div>
+                  <h3 class="output-box-title">Generated Prompt for Webex</h3>
+                  <span class="output-box-subtitle">Live real-time template payload</span>
+                </div>
+              </div>
               <span class="pill-badge badge-chat" id="ready-badge">Ready to Paste</span>
             </div>
 
             <div class="apple-code-display" id="live-code-box"></div>
 
             <button class="apple-copy-btn" id="copy-btn" onclick="copyCurrentPrompt()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path></svg>
               <span>Copy Prompt for Webex</span>
             </button>
 
@@ -1780,16 +2007,23 @@
           </div>
         </div>
 
-        <div class="studio-output-box">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.15rem;">
-            <h3 style="font-size: 1.05rem; font-weight: 700;">Live Generated Prompt</h3>
+        <div class="studio-output-box" id="builder-output-box">
+          <div class="output-box-header">
+            <div class="output-box-title-group">
+              <span class="output-box-icon">🛠️</span>
+              <div>
+                <h3 class="output-box-title">Live Generated Prompt</h3>
+                <span class="output-box-subtitle">Dynamic formula payload</span>
+              </div>
+            </div>
             <span class="pill-badge badge-chat">Formula Ready</span>
           </div>
 
           <div class="apple-code-display" id="builder-code-display"></div>
 
           <button class="apple-copy-btn" id="builder-copy-btn" onclick="copyCustomStudio()">
-            📋 <span>Copy Custom Prompt</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy Custom Prompt</span>
           </button>
 
           <div class="apple-guidance-card">
@@ -2284,6 +2518,30 @@
       modeBadge.innerHTML = isAgent ?
         `<span class="pill-badge badge-agent">⚡ Agent Skill (Requires Connectors)</span>` :
         `<span class="pill-badge badge-chat">💬 Standard Circuit Chat (Zero Connectors Needed)</span>`;
+
+      const outputBox = document.getElementById('wizard-output-box');
+      const outIcon = document.getElementById('output-box-icon');
+      const readyBadge = document.getElementById('ready-badge');
+
+      if (outputBox) {
+        if (isAgent) {
+          outputBox.classList.add('agent-mode-box');
+          outputBox.classList.remove('chat-mode-box');
+          if (outIcon) outIcon.innerText = '⚡';
+          if (readyBadge) {
+            readyBadge.className = 'pill-badge badge-agent';
+            readyBadge.innerText = '⚡ Agent Skill Ready';
+          }
+        } else {
+          outputBox.classList.add('chat-mode-box');
+          outputBox.classList.remove('agent-mode-box');
+          if (outIcon) outIcon.innerText = '💬';
+          if (readyBadge) {
+            readyBadge.className = 'pill-badge badge-chat';
+            readyBadge.innerText = '💬 Webex Chat Ready';
+          }
+        }
+      }
 
       document.getElementById('customizer-title').innerText = p.title;
       document.getElementById('customizer-desc').innerText = p.description;
