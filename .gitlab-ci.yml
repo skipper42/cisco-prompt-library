@@ -2,6 +2,8 @@ image: busybox
 
 pages:
   stage: deploy
+  tags:
+    - gitlab-org-docker
   script:
     - mkdir -p public
     - cp index.html public/
