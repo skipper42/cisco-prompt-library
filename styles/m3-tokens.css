@@ -1,0 +1,146 @@
+/**
+ * Cisco AI Prompt Navigator — Material Design 3 Design Tokens
+ * Blends Cisco Bridge Blue brand identity with MD3 baseline tokens.
+ */
+
+:root {
+  /* Typography */
+  --md-font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --md-font-family-mono: 'Roboto Mono', 'SF Mono', Consolas, Monaco, monospace;
+
+  /* Cisco Brand Accents */
+  --cisco-blue: #049fd9;
+  --cisco-navy: #005073;
+  --cisco-dark: #0b1528;
+  --cisco-cyan: #00bceb;
+  --cisco-green: #34c759;
+  --cisco-purple: #7044ff;
+
+  /* Baseline Light Theme (Material 3) */
+  --md-sys-color-primary: #00658f;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #c7e7ff;
+  --md-sys-color-on-primary-container: #001e2e;
+
+  --md-sys-color-secondary: #4f616e;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #d2e5f5;
+  --md-sys-color-on-secondary-container: #0b1d29;
+
+  --md-sys-color-tertiary: #63597c;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #e9ddff;
+  --md-sys-color-on-tertiary-container: #1f1635;
+
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+
+  --md-sys-color-background: #fbfcfe;
+  --md-sys-color-on-background: #191c1e;
+  --md-sys-color-surface: #fbfcfe;
+  --md-sys-color-on-surface: #191c1e;
+  --md-sys-color-surface-variant: #dde3ea;
+  --md-sys-color-on-surface-variant: #41474d;
+
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f5f6f8;
+  --md-sys-color-surface-container: #eff1f3;
+  --md-sys-color-surface-container-high: #e9ebed;
+  --md-sys-color-surface-container-highest: #e3e5e7;
+
+  --md-sys-color-outline: #71787e;
+  --md-sys-color-outline-variant: #c1c7ce;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #2e3133;
+  --md-sys-color-inverse-on-surface: #f0f1f3;
+  --md-sys-color-inverse-primary: #85cfff;
+
+  /* Bot Specific Accents */
+  --bot-circuit-bg: #e0f2fe;
+  --bot-circuit-text: #0369a1;
+  --bot-circuit-border: #bae6fd;
+  --bot-agent-bg: #ede9fe;
+  --bot-agent-text: #6d28d9;
+  --bot-agent-border: #ddd6fe;
+
+  /* Elevation Shadows */
+  --md-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+  --md-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.14);
+  --md-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  --md-elevation-4: 0 6px 10px 4px rgba(0, 0, 0, 0.10), 0 2px 3px 0 rgba(0, 0, 0, 0.18);
+  --md-elevation-5: 0 8px 12px 6px rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.20);
+
+  /* Shape tokens */
+  --md-shape-xs: 4px;
+  --md-shape-sm: 8px;
+  --md-shape-md: 12px;
+  --md-shape-lg: 16px;
+  --md-shape-xl: 24px;
+  --md-shape-full: 9999px;
+
+  /* Transitions */
+  --md-motion-easing: cubic-bezier(0.2, 0, 0, 1);
+  --md-motion-duration-short: 150ms;
+  --md-motion-duration-medium: 250ms;
+  --md-motion-duration-long: 350ms;
+}
+
+/* Dark Theme Tokens */
+[data-theme="dark"] {
+  --md-sys-color-primary: #85cfff;
+  --md-sys-color-on-primary: #00344d;
+  --md-sys-color-primary-container: #004c6e;
+  --md-sys-color-on-primary-container: #c7e7ff;
+
+  --md-sys-color-secondary: #b6c9d8;
+  --md-sys-color-on-secondary: #21333e;
+  --md-sys-color-secondary-container: #374a55;
+  --md-sys-color-on-secondary-container: #d2e5f5;
+
+  --md-sys-color-tertiary: #cec0e8;
+  --md-sys-color-on-tertiary: #342b4b;
+  --md-sys-color-tertiary-container: #4b4163;
+  --md-sys-color-on-tertiary-container: #e9ddff;
+
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffdad6;
+
+  --md-sys-color-background: #0f1418;
+  --md-sys-color-on-background: #e1e3e5;
+  --md-sys-color-surface: #0f1418;
+  --md-sys-color-on-surface: #e1e3e5;
+  --md-sys-color-surface-variant: #41474d;
+  --md-sys-color-on-surface-variant: #c1c7ce;
+
+  --md-sys-color-surface-container-lowest: #0a0f12;
+  --md-sys-color-surface-container-low: #171c20;
+  --md-sys-color-surface-container: #1b2024;
+  --md-sys-color-surface-container-high: #262b2e;
+  --md-sys-color-surface-container-highest: #313639;
+
+  --md-sys-color-outline: #8b9297;
+  --md-sys-color-outline-variant: #41474d;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #e1e3e5;
+  --md-sys-color-inverse-on-surface: #2e3133;
+  --md-sys-color-inverse-primary: #00658f;
+
+  --bot-circuit-bg: #0c2a40;
+  --bot-circuit-text: #7dd3fc;
+  --bot-circuit-border: #0369a1;
+  --bot-agent-bg: #281e46;
+  --bot-agent-text: #c4b5fd;
+  --bot-agent-border: #6d28d9;
+
+  --md-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --md-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+  --md-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.7);
+  --md-elevation-4: 0 6px 10px 4px rgba(0, 0, 0, 0.5), 0 2px 3px 0 rgba(0, 0, 0, 0.8);
+  --md-elevation-5: 0 8px 12px 6px rgba(0, 0, 0, 0.6), 0 4px 4px 0 rgba(0, 0, 0, 0.9);
+}

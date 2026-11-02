@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Cisco AI Prompt Navigator</title>
+  
+  <!-- Material 3 & Cisco Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/m3-tokens.css">
+  <link rel="stylesheet" href="styles/main.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/cisco-logo.svg">
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header class="top-app-bar">
+    <div class="brand-section" id="brand-home-btn" title="Cisco AI Prompt Navigator">
+      <img src="assets/cisco-logo.svg" alt="Cisco" class="cisco-logo" onerror="this.src='assets/cisco-logo.png'">
+      <div class="app-title-group">
+        <span class="app-title">Prompt Navigator</span>
+        <span class="app-subtitle">Circuit &amp; My Agent</span>
+      </div>
+    </div>
+
+    <!-- Search Input -->
+    <div class="header-search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="global-search-input" class="header-search-input" placeholder="Search prompts, categories, tags, or tools..." autocomplete="off">
+        <button id="clear-search-btn" class="clear-search-btn" title="Clear search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button id="restart-wizard-btn" class="btn btn-outlined" title="Restart Onboarding Wizard">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <span>Restart Wizard</span>
+      </button>
+
+      <button id="manage-db-btn" class="btn btn-tonal" title="Edit library, export or import JSON">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Manage DB</span>
+      </button>
+
+      <button id="theme-toggle-btn" class="btn-icon" title="Toggle Light / Dark mode" aria-label="Toggle theme">
+        <span id="theme-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero & Mode State Banner -->
+  <section class="hero-banner">
+    <div class="hero-content">
+      <div class="mode-badge-card">
+        <div class="mode-badge-left">
+          <div class="mode-icon-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div>
+            <div id="mode-banner-title" class="mode-title">Account Executive Spotlight</div>
+            <div id="mode-banner-desc" class="mode-description">
+              Curated top 12 daily high-leverage prompts for deal velocity, inbox triage, CCW discounts, and reviews.
+            </div>
+          </div>
+        </div>
+        <button id="banner-switch-mode-btn" class="btn btn-outlined">
+          Explore All Cisco Roles
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <main class="main-container">
+    
+    <!-- Controls (Role Chips & Bot Selectors) -->
+    <div class="controls-bar">
+      <!-- Role Filter Chips (Visible in Full Catalog mode) -->
+      <div id="role-chips-container" class="chips-row">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="sub-controls-row">
+        <!-- Bot Selectors -->
+        <div class="bot-selector-group">
+          <span style="font-size: 0.8rem; font-weight: 600; color: var(--md-sys-color-outline); margin-right: 0.35rem;">AI Tool:</span>
+          <button class="bot-pill active" data-bot="all">All Tools</button>
+          <button class="bot-pill" data-bot="circuit">Circuit AI Chat</button>
+          <button class="bot-pill" data-bot="my_agent">My Agent</button>
+        </div>
+
+        <!-- Counter Meta -->
+        <div id="results-count-meta" class="results-meta">
+          Loading prompts...
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompts Card Grid -->
+    <div id="prompts-grid" class="prompts-grid">
+      <!-- Cards rendered dynamically -->
+    </div>
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: Onboarding Wizard                                  -->
+  <!-- ======================================================== -->
+  <div id="wizard-modal" class="modal-scrim">
+    <div class="modal-container" style="max-width: 580px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <img src="assets/cisco-logo.svg" alt="Cisco" style="height: 22px; width: auto;" onerror="this.src='assets/cisco-logo.png'">
+          <div class="modal-header-title">Welcome to Prompt Navigator</div>
+        </div>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p style="font-size: 0.95rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 0.5rem;">
+          Accelerate your daily workflow with Cisco AI. How would you like to experience the prompt library?
+        </p>
+
+        <div class="wizard-options-grid">
+          <!-- Option 1: AE Spotlight -->
+          <div id="wizard-opt-ae" class="wizard-card">
+            <div class="wizard-badge">Recommended for Sales</div>
+            <div class="wizard-card-icon">💼</div>
+            <div class="wizard-card-title">Account Executive / Sales</div>
+            <div class="wizard-card-desc">
+              Fast-track deal velocity. Surfaces the <strong>Top 12 curated prompts</strong> for mailbox triage, Concur/Performance Review approvals, CCW deal discounts, install base insights, and renewal contracts.
+            </div>
+            <button class="btn btn-primary" style="margin-top: auto; width: 100%;">
+              Open AE Spotlight (Top 12)
+            </button>
+          </div>
+
+          <!-- Option 2: Full Experience -->
+          <div id="wizard-opt-all" class="wizard-card">
+            <div class="wizard-badge" style="background-color: var(--md-sys-color-secondary);">Full Catalog</div>
+            <div class="wizard-card-icon">🌐</div>
+            <div class="wizard-card-title">All Cisco Roles</div>
+            <div class="wizard-card-desc">
+              Complete, streamlined library covering Engineering, Network Ops, TAC Support, Marketing, HR, People Leaders, and Finance.
+            </div>
+            <button class="btn btn-tonal" style="margin-top: auto; width: 100%;">
+              Explore All Roles
+            </button>
+          </div>
+        </div>
+
+        <p style="font-size: 0.75rem; color: var(--md-sys-color-outline); margin-top: 0.5rem;">
+          You can restart this wizard or switch views anytime using the top navigation bar.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: Prompt Builder / Parameter Customizer             -->
+  <!-- ======================================================== -->
+  <div id="prompt-builder-modal" class="modal-scrim">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span id="builder-bot-badge" class="bot-badge"></span>
+            <span id="builder-title" class="modal-header-title"></span>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--md-sys-color-outline);">
+            Target Webex Bot: <code id="builder-bot-email" style="font-family: var(--md-font-family-mono); color: var(--md-sys-color-primary);"></code>
+          </div>
+        </div>
+        <button id="close-builder-btn" class="btn-icon" title="Close" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p id="builder-desc" style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant);"></p>
+
+        <!-- Dynamic Parameter Fields (Freeform Text Inputs Only — NO Dropdowns!) -->
+        <div id="builder-fields-container" style="display: flex; flex-direction: column; gap: 1rem;">
+          <!-- Injected dynamically -->
+        </div>
+
+        <!-- Live Generated Prompt Preview -->
+        <div class="preview-box">
+          <div class="preview-box-header">
+            <span class="preview-box-title">Live Prompt Preview</span>
+            <span style="font-size: 0.72rem; color: var(--md-sys-color-outline);">Ready for Webex chat</span>
+          </div>
+          <div id="builder-preview-text" class="preview-content"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <!-- Dual Actions: Independent Copy & Open Webex -->
+        <button id="builder-copy-btn" class="btn btn-outlined">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy Prompt</span>
+        </button>
+
+        <button id="builder-webex-btn" class="btn btn-tonal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Open Webex Chat</span>
+        </button>
+
+        <button id="builder-copy-webex-btn" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Copy &amp; Open Webex</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: Manage Database (CRUD, Export, Import)            -->
+  <!-- ======================================================== -->
+  <div id="manage-db-modal" class="modal-scrim">
+    <div class="modal-container" style="max-width: 800px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="modal-header-title">Prompt Database Manager</div>
+          <span id="db-stats-badge" class="chip" style="font-size: 0.75rem;"></span>
+        </div>
+        <button id="close-manage-db-btn" class="btn-icon" title="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- DB Action Toolbar -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;">
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button id="db-add-new-btn" class="btn btn-primary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add New Prompt</span>
+            </button>
+            <button id="db-export-btn" class="btn btn-outlined btn-sm" title="Download active library as JSON">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Export JSON</span>
+            </button>
+            <button id="db-import-btn" class="btn btn-outlined btn-sm" title="Upload JSON file to merge or replace">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>Import JSON</span>
+            </button>
+            <input type="file" id="db-import-file" accept=".json" style="display: none;">
+          </div>
+
+          <button id="db-reset-btn" class="btn btn-text btn-sm" style="color: var(--md-sys-color-error);" title="Reset back to factory defaults">
+            Reset to Defaults
+          </button>
+        </div>
+
+        <!-- Search Bar within DB Manager -->
+        <input type="text" id="db-search-input" class="form-input" placeholder="Filter prompts in database..." style="margin-top: 0.5rem;">
+
+        <!-- Prompts Table -->
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Title &amp; Category</th>
+                <th>Role</th>
+                <th>Target Bot</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="db-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: Add / Edit Prompt Form                            -->
+  <!-- ======================================================== -->
+  <div id="edit-prompt-modal" class="modal-scrim">
+    <div class="modal-container" style="max-width: 620px;">
+      <div class="modal-header">
+        <div id="edit-modal-title" class="modal-header-title">Edit Prompt</div>
+        <button id="close-edit-prompt-btn" class="btn-icon" title="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="edit-prompt-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Prompt Title</label>
+            <input type="text" id="edit-prompt-title" class="form-input" required placeholder="e.g. Daily Mailbox Triage">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Target Role</label>
+              <input type="text" id="edit-prompt-role" class="form-input" placeholder="e.g. Account Executive Spotlight, Engineering...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <input type="text" id="edit-prompt-category" class="form-input" placeholder="e.g. Deal Management, NOC Triage...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Target Webex Tool</label>
+            <select id="edit-prompt-bot" class="form-input" style="padding: 0.65rem 0.9rem;">
+              <option value="circuit">Circuit AI Chat (enterprise-chat-ai@webex.bot)</option>
+              <option value="my_agent">My Agent Skills &amp; Connectors (circuitpulse@webex.bot)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Short Description</label>
+            <input type="text" id="edit-prompt-desc" class="form-input" placeholder="Summary of what this prompt accomplishes...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span>Prompt Template</span>
+              <span style="font-size: 0.72rem; color: var(--md-sys-color-outline);">Use {variable_name} for freeform text placeholders</span>
+            </label>
+            <textarea id="edit-prompt-template" class="form-textarea" rows="4" required placeholder="e.g. Scan my last {timeframe} of emails for customer {customer_name}..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tags (comma separated)</label>
+            <input type="text" id="edit-prompt-tags" class="form-input" placeholder="e.g. email, triage, deals, ccw">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outlined" onclick="document.getElementById('edit-prompt-modal').classList.remove('active')">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Save Prompt
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main ES Module Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
