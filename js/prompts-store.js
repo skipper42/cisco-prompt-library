@@ -213,12 +213,13 @@ class PromptsStore {
 
   // Theme preference helpers
   getTheme() {
-    return localStorage.getItem(STORAGE_KEY_THEME) || 'light';
+    return localStorage.getItem(STORAGE_KEY_THEME) || 'dark';
   }
 
   setTheme(theme) {
     localStorage.setItem(STORAGE_KEY_THEME, theme);
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }
 }
 

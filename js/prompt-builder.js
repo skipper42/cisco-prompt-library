@@ -137,6 +137,7 @@ class PromptBuilder {
 
     // Show modal
     this.modalEl.classList.add('active');
+    if (window.lucide) lucide.createIcons();
   }
 
   close() {

@@ -97,6 +97,7 @@ class DbEditor {
     if (dbSearchInput) dbSearchInput.value = '';
     this.renderTable();
     this.modalEl.classList.add('active');
+    if (window.lucide) lucide.createIcons();
   }
 
   close() {

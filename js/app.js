@@ -1,6 +1,6 @@
 /**
  * Cisco AI Prompt Navigator — Main App Controller
- * Orchestrates wizard, filters, card rendering, and theme management.
+ * Orchestrates wizard, filters, card rendering, and theme management with Modern SaaS UI.
  */
 
 import { store } from './prompts-store.js';
@@ -18,7 +18,7 @@ class App {
   }
 
   async init() {
-    // Theme setup
+    // Theme setup (default dark modern SaaS)
     const savedTheme = store.getTheme();
     store.setTheme(savedTheme);
     this.setupThemeToggle();
@@ -50,6 +50,10 @@ class App {
       // First visit: launch onboarding wizard
       this.openWizard();
     }
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   }
 
   setupThemeToggle() {
@@ -57,7 +61,7 @@ class App {
     if (!themeBtn) return;
 
     themeBtn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
       const next = current === 'dark' ? 'light' : 'dark';
       store.setTheme(next);
       this.updateThemeIcon(next);
@@ -70,9 +74,12 @@ class App {
     const iconContainer = document.getElementById('theme-icon');
     if (!iconContainer) return;
     if (theme === 'dark') {
-      iconContainer.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+      iconContainer.innerHTML = `<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>`;
     } else {
-      iconContainer.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      iconContainer.innerHTML = `<i data-lucide="moon" class="w-4 h-4 text-cyan-500"></i>`;
+    }
+    if (window.lucide) {
+      lucide.createIcons();
     }
   }
 
@@ -112,6 +119,7 @@ class App {
   openWizard() {
     if (this.wizardModalEl) {
       this.wizardModalEl.classList.add('active');
+      if (window.lucide) lucide.createIcons();
     }
   }
 
@@ -134,18 +142,18 @@ class App {
     // Update Banner UI
     const bannerTitle = document.getElementById('mode-banner-title');
     const bannerDesc = document.getElementById('mode-banner-desc');
-    const bannerBtn = document.getElementById('banner-switch-mode-btn');
+    const bannerBtnText = document.getElementById('banner-switch-mode-text');
     const roleChipsContainer = document.getElementById('role-chips-container');
 
     if (mode === 'ae_spotlight') {
       if (bannerTitle) bannerTitle.textContent = 'Account Executive & Sales Spotlight';
       if (bannerDesc) bannerDesc.textContent = 'Curated high-leverage prompts for deal velocity, MBR insights, Cisco Ready inventory, inbox triage, and CCW discounts.';
-      if (bannerBtn) bannerBtn.textContent = 'Explore All Cisco Roles';
+      if (bannerBtnText) bannerBtnText.textContent = 'Explore All Cisco Roles';
       if (roleChipsContainer) roleChipsContainer.style.display = 'none';
     } else {
       if (bannerTitle) bannerTitle.textContent = 'Cisco Full Workforce AI Library';
       if (bannerDesc) bannerDesc.textContent = 'Consolidated, high-impact prompts for Workplace Productivity, Sales, People Leaders, Marketing & Finance.';
-      if (bannerBtn) bannerBtn.textContent = 'Switch to Account Executive Spotlight';
+      if (bannerBtnText) bannerBtnText.textContent = 'Switch to Account Executive Spotlight';
       if (roleChipsContainer) roleChipsContainer.style.display = 'flex';
     }
 
@@ -276,15 +284,15 @@ class App {
 
     if (filtered.length === 0) {
       gridEl.innerHTML = `
-        <div class="empty-state">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <h3>No matching prompts found</h3>
-          <p style="margin-top: 0.5rem; font-size: 0.85rem;">Try adjusting your search query, selecting another category, or resetting filters.</p>
+        <div class="col-span-full p-12 text-center rounded-2xl bg-slate-900/60 dynamic-blur border border-white/10">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+            <i data-lucide="search-x" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-base font-bold text-white tracking-tight">No matching prompts found</h3>
+          <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Try adjusting your search query, selecting another category, or resetting filters.</p>
         </div>
       `;
+      if (window.lucide) lucide.createIcons();
       return;
     }
 
@@ -327,42 +335,60 @@ class App {
         });
       }
     });
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   }
 
   renderPromptCard(prompt) {
     const botKey = prompt.target_bot || 'circuit';
     const botMeta = WEBEX_BOTS[botKey] || WEBEX_BOTS.circuit;
+    const isCircuit = botKey === 'circuit';
     const connectorsHtml = Array.isArray(prompt.connectors) && prompt.connectors.length > 0
-      ? `<div class="connectors-list">${prompt.connectors.map(c => `<span class="connector-chip">${this._escapeHtml(c)}</span>`).join('')}</div>`
+      ? `<div class="flex flex-wrap gap-1.5 mb-4">${prompt.connectors.map(c => `<span class="connector-chip">${this._escapeHtml(c)}</span>`).join('')}</div>`
       : '';
 
     return `
-      <div class="prompt-card" data-id="${prompt.id}">
-        <div class="card-top prompt-card-clickable" style="cursor: pointer;">
-          <div class="card-badges">
-            <span class="bot-badge ${botMeta.badgeClass}">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="margin-right:2px;"><circle cx="12" cy="12" r="10"/></svg>
+      <div class="prompt-card group relative p-5 rounded-2xl bg-slate-900/60 dynamic-blur border border-white/10 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col justify-between" data-id="${prompt.id}">
+        <div class="prompt-card-clickable cursor-pointer flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium ${
+              isCircuit 
+                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' 
+                : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+            }">
+              <span class="w-1.5 h-1.5 rounded-full ${isCircuit ? 'bg-cyan-400 animate-pulse' : 'bg-emerald-400'}"></span>
               ${botMeta.name}
             </span>
-            <span class="category-tag">${this._escapeHtml(prompt.category || 'General')}</span>
+            <span class="text-[11px] font-medium text-slate-400 px-2 py-0.5 rounded-full bg-slate-800/80 border border-white/5">
+              ${this._escapeHtml(prompt.category || 'General')}
+            </span>
           </div>
-          <h3 class="prompt-title">${this._escapeHtml(prompt.title)}</h3>
-          <p class="prompt-description">${this._escapeHtml(prompt.description || '')}</p>
+
+          <h3 class="font-bold text-base tracking-tight text-white group-hover:text-cyan-400 transition-colors mb-2 leading-snug">
+            ${this._escapeHtml(prompt.title)}
+          </h3>
+
+          <p class="text-xs text-slate-400 leading-relaxed mb-4 flex-1">
+            ${this._escapeHtml(prompt.description || '')}
+          </p>
+
           ${connectorsHtml}
         </div>
-        
-        <div class="card-actions">
-          <button class="btn btn-primary btn-sm use-prompt-btn" title="Customize variables and preview prompt">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            Use Prompt
+
+        <div class="pt-3 border-t border-white/5 flex items-center justify-between gap-2 mt-auto">
+          <button class="use-prompt-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all hover:shadow-lg hover:shadow-cyan-500/20" title="Customize variables and preview prompt">
+            <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+            <span>Use Prompt</span>
           </button>
-          
-          <div class="card-actions-left">
-            <button class="btn btn-outlined btn-icon quick-copy-btn" title="Copy raw prompt to clipboard" aria-label="Copy prompt">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+
+          <div class="flex items-center gap-1.5">
+            <button class="quick-copy-btn p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/10 transition-colors" title="Copy raw prompt template" aria-label="Copy prompt">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
             </button>
-            <button class="btn btn-outlined btn-icon quick-copy-webex-btn" title="Copy &amp; Open Webex (${botMeta.name})" aria-label="Copy &amp; Open Webex">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <button class="quick-copy-webex-btn p-2 rounded-xl bg-slate-800 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 transition-colors" title="Copy & Open Webex (${botMeta.name})" aria-label="Copy & Open Webex">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
             </button>
           </div>
         </div>
