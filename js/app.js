@@ -139,13 +139,13 @@ class App {
 
     if (mode === 'ae_spotlight') {
       if (bannerTitle) bannerTitle.textContent = 'Account Executive & Sales Spotlight';
-      if (bannerDesc) bannerDesc.textContent = 'Curated top 12 daily high-leverage prompts for deal velocity, inbox triage, CCW discounts, and reviews.';
+      if (bannerDesc) bannerDesc.textContent = 'Curated high-leverage prompts for deal velocity, MBR insights, Cisco Ready inventory, inbox triage, and CCW discounts.';
       if (bannerBtn) bannerBtn.textContent = 'Explore All Cisco Roles';
       if (roleChipsContainer) roleChipsContainer.style.display = 'none';
     } else {
       if (bannerTitle) bannerTitle.textContent = 'Cisco Full Workforce AI Library';
       if (bannerDesc) bannerDesc.textContent = 'Consolidated, high-impact prompts for Workplace Productivity, Sales, People Leaders, Marketing & Finance.';
-      if (bannerBtn) bannerBtn.textContent = 'Switch to Account Executive Top 12';
+      if (bannerBtn) bannerBtn.textContent = 'Switch to Account Executive Spotlight';
       if (roleChipsContainer) roleChipsContainer.style.display = 'flex';
     }
 
@@ -315,14 +315,15 @@ class App {
         });
       }
 
-      // Quick Webex button
-      const webexBtn = card.querySelector('.quick-webex-btn');
-      if (webexBtn) {
-        webexBtn.addEventListener('click', (e) => {
+      // Quick Copy & Open Webex button
+      const copyWebexBtn = card.querySelector('.quick-copy-webex-btn');
+      if (copyWebexBtn) {
+        copyWebexBtn.addEventListener('click', async (e) => {
           e.stopPropagation();
+          await copyToClipboard(prompt.template);
           openWebexBot(prompt.target_bot);
           const botMeta = WEBEX_BOTS[prompt.target_bot] || WEBEX_BOTS.circuit;
-          showToast(`Opening Webex chat with ${botMeta.name}...`, 'info');
+          showToast(`Copied! Opening Webex with ${botMeta.name} — hit Paste (Ctrl+V)`, 'success', 4000);
         });
       }
     });
@@ -360,8 +361,8 @@ class App {
             <button class="btn btn-outlined btn-icon quick-copy-btn" title="Copy raw prompt to clipboard" aria-label="Copy prompt">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
-            <button class="btn btn-outlined btn-icon quick-webex-btn" title="Open Webex chat (${botMeta.email})" aria-label="Open Webex">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <button class="btn btn-outlined btn-icon quick-copy-webex-btn" title="Copy &amp; Open Webex (${botMeta.name})" aria-label="Copy &amp; Open Webex">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
             </button>
           </div>
         </div>

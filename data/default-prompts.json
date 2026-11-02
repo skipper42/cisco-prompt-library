@@ -3,7 +3,7 @@
     "id": "ae_mailbox_triage",
     "title": "Daily Mailbox & Webex Triage (Declutter)",
     "role": "Account Executive Spotlight",
-    "category": "Inbox & Deal Management",
+    "category": "Inbox & Message Triage",
     "is_ae_top10": true,
     "target_bot": "my_agent",
     "bot_label": "My Agent (Skills & Tools)",
@@ -11,20 +11,14 @@
       "Outlook",
       "Webex"
     ],
-    "description": "Scans your last 24 to 48 hours of emails and Webex messages to surface deal blockers, customer requests, and VIP leadership asks with drafted replies.",
-    "template": "Scan my last {timeframe} of Outlook emails and Webex direct messages/spaces. Surface only items requiring my decision or customer deal action, ranked by customer deal urgency and VIP leadership priority. Group them into: 1) Urgent Customer Deal Blockers, 2) Leadership Asks, and 3) Informational. For the top {count} urgent items, draft concise, Smart Brevity replies ready for my review.",
+    "description": "Scans your last 24 to 48 hours of emails and Webex messages to surface a clean summary of what was missed, items requiring attention, and pending user actions.",
+    "template": "Scan my last {timeframe} of Outlook emails and Webex direct messages and group spaces. Provide a clear executive summary of: 1) What critical updates or announcements I missed, 2) Items requiring my urgent attention or pending decision, 3) Questions or customer inquiries waiting on my response, 4) Upcoming deadlines or scheduled meetings in the next 24 hours. Do not draft full email replies; organize into prioritized, bulleted checklists with sender names, context, and required action.",
     "fields": [
       {
         "name": "timeframe",
         "label": "Time Window",
-        "placeholder": "e.g. 24 hours, 48 hours",
+        "placeholder": "e.g. 24 hours, 48 hours, past 2 days",
         "default": "24 hours"
-      },
-      {
-        "name": "count",
-        "label": "Number of Draft Replies",
-        "placeholder": "e.g. 3, 5",
-        "default": "3"
       }
     ],
     "tags": [
@@ -32,9 +26,42 @@
       "webex",
       "inbox",
       "triage",
+      "declutter",
       "productivity",
-      "ae",
-      "deals"
+      "ae"
+    ]
+  },
+  {
+    "id": "ae_pto_catchup",
+    "title": "Post-PTO / Vacation Catch-Up & Account Briefing",
+    "role": "Account Executive Spotlight",
+    "category": "Inbox & Message Triage",
+    "is_ae_top10": true,
+    "target_bot": "my_agent",
+    "bot_label": "My Agent (Skills & Tools)",
+    "connectors": [
+      "My Workday",
+      "Outlook",
+      "Webex"
+    ],
+    "description": "Checks My Workday PTO records and scans all communications over your absence to provide a comprehensive briefing of everything that happened while away.",
+    "template": "I was away on leave for {days_off} days. Check my approved PTO records in My Workday and scan my Outlook inbox and Webex customer spaces over this absence window. Generate a comprehensive return-to-office executive briefing: 1) Major deal progressions, customer decisions, or contract milestones that occurred while away, 2) Escalations or critical issues resolved by coverage teammates, 3) Pending approvals or customer inquiries awaiting my return, 4) Top 5 priority action items I must tackle on Day 1.",
+    "fields": [
+      {
+        "name": "days_off",
+        "label": "Days Out of Office",
+        "placeholder": "e.g. 3, 5, 10, 14",
+        "default": "5"
+      }
+    ],
+    "tags": [
+      "pto",
+      "vacation",
+      "catchup",
+      "workday",
+      "email",
+      "webex",
+      "ae"
     ]
   },
   {
@@ -46,12 +73,13 @@
     "target_bot": "my_agent",
     "bot_label": "My Agent (Skills & Tools)",
     "connectors": [
-      "Outlook",
-      "Webex Calendar",
-      "Workday"
+      "My Workday",
+      "Outlook Calendar",
+      "Webex",
+      "My Business Reports (MBR)"
     ],
-    "description": "Reviews your calendar meetings, customer engagements, and deliverables over the past week to generate structured check-in reflections for My Performance Review (formerly Team Space).",
-    "template": "Review my Webex meetings, sent customer emails, and key milestones completed during {timeframe}. Draft my weekly check-in for 'My Performance Review' structured into: 1) What did I accomplish this week? (highlighting customer deal milestones, customer meetings, and cross-functional collaborations), 2) What are my top 3 focus priorities for next week? 3) Where do I need coaching or roadblock removal from my manager? Tone: {tone}.",
+    "description": "Reviews your calendar meetings, customer deliverables, and closed bookings in MBR to draft structured weekly check-in reflections for My Workday.",
+    "template": "Review my Outlook calendar appointments, customer Webex meetings, sent emails, and sales milestones in My Business Reports (MBR) during {timeframe}. Draft my weekly check-in for 'My Performance Review' in My Workday structured into: 1) What high-impact deliverables and customer outcomes did I achieve this week? 2) What are my top 3 strategic focus priorities for next week? 3) What coaching, executive sponsorship, or roadblock removal do I need from my manager? Tone: {tone}.",
     "fields": [
       {
         "name": "timeframe",
@@ -70,14 +98,14 @@
       "teamspace",
       "performance review",
       "checkin",
-      "hr",
-      "weekly",
-      "workday"
+      "workday",
+      "mbr",
+      "weekly"
     ]
   },
   {
     "id": "ae_manager_approvals",
-    "title": "Manager Approvals Digest (Concur, Reviews, Deals)",
+    "title": "Manager Approvals Digest (Concur, My Workday, CCW Deals)",
     "role": "Account Executive Spotlight",
     "category": "Management & Governance",
     "is_ae_top10": true,
@@ -85,11 +113,12 @@
     "bot_label": "My Agent (Skills & Tools)",
     "connectors": [
       "Concur",
-      "Workday",
-      "CCW"
+      "My Workday",
+      "CCW",
+      "My Business Reports (MBR)"
     ],
-    "description": "For Sales Managers: scans pending approvals across Concur expense reports, My Performance Review check-ins, and CCW deal discount authorizations.",
-    "template": "Check all my connected enterprise tools for pending approvals awaiting my action: 1) Concur expense reports pending manager sign-off (highlighting total dollar amount and any flagged policy exceptions), 2) My Performance Review employee check-ins pending manager review, and 3) Cisco Commerce Workspace (CCW) non-standard discount approvals. Output a crisp markdown checklist with employee name, item details, dollar amounts, and recommended action.",
+    "description": "For Sales Managers: scans pending approvals across Concur expense reports, My Workday employee check-ins, and CCW deal discount authorizations.",
+    "template": "Scan all my connected enterprise tools for pending approvals awaiting my action: 1) Concur expense reports pending manager sign-off (highlighting total spend, employee name, and any flagged policy exceptions), 2) 'My Performance Review' check-ins and PTO requests in My Workday awaiting approval, 3) Cisco Commerce Workspace (CCW) non-standard discount approvals with deal size and margin impact cross-referenced against historical team spend in My Business Reports (MBR). Output a clean checklist with item details, dollar amounts, and recommended action.",
     "fields": [
       {
         "name": "priority_filter",
@@ -102,8 +131,9 @@
       "concur",
       "approvals",
       "manager",
-      "teamspace",
+      "workday",
       "ccw",
+      "mbr",
       "expenses"
     ]
   },
@@ -116,20 +146,22 @@
     "target_bot": "circuit",
     "bot_label": "Circuit AI Chat",
     "connectors": [
-      "CCW"
+      "CCW",
+      "My Business Reports (MBR)",
+      "Salesforce"
     ],
     "description": "Generates airtight, commercial discount justifications for Cisco Commerce Workspace (CCW DART) to speed up sales leadership and finance approvals.",
-    "template": "Draft a persuasive, executive business justification for a non-standard discount approval in CCW for customer {customer_name}. Deal size: {deal_value}, requested discount: {discount_pct} on {product_families}. Primary competitor: {competitor}. Competitive threat details: {competitive_threat}. Include: 1) Executive Deal Summary & Strategic Value to Cisco, 2) Competitive Pressure & Why this discount is required to win, 3) Future Expansion & Enterprise Agreement (EA) pull-through potential, and 4) Margin impact and risk of walkaway.",
+    "template": "Draft a persuasive, executive business justification for a non-standard discount approval in CCW for customer {customer_name}. Deal size: {deal_value}, requested discount: {discount_pct} on {product_families}. Primary competitor: {competitor}. Competitive threat details: {competitive_threat}. Pull historical customer spend context from My Business Reports (MBR) and include: 1) Executive Deal Summary & Strategic Value to Cisco, 2) Competitive Pressure & Why this discount is required to displace competitor, 3) Future Expansion & Enterprise Agreement (EA) pull-through potential, 4) Margin impact and walkaway risk.",
     "fields": [
       {
         "name": "customer_name",
         "label": "Customer Name",
-        "placeholder": "e.g. Acme Corp",
+        "placeholder": "e.g. Acme Global Financial",
         "default": "Acme Global Financial"
       },
       {
         "name": "deal_value",
-        "label": "Estimated Total Deal Value",
+        "label": "Total Deal Value",
         "placeholder": "e.g. $450,000",
         "default": "$450,000"
       },
@@ -141,9 +173,9 @@
       },
       {
         "name": "product_families",
-        "label": "Cisco Products / Architecture",
-        "placeholder": "e.g. Catalyst 9300 + DNA-Advantage, Meraki MX",
-        "default": "Catalyst 9300X switches and Cisco DNA Advantage subscriptions"
+        "label": "Target Product Families",
+        "placeholder": "e.g. Campus Switching, Security Cloud, Observability",
+        "default": "Campus Switching and Software Subscriptions"
       },
       {
         "name": "competitor",
@@ -154,8 +186,8 @@
       {
         "name": "competitive_threat",
         "label": "Competitive Threat Note",
-        "placeholder": "e.g. Competitor offering 65% off hardware with free licensing",
-        "default": "Arista offering deep aggressive displacement pricing with free 3-year telemetry licensing"
+        "placeholder": "e.g. Competitor offering 65% off hardware with free 3-year licensing",
+        "default": "Competitor offering aggressive displacement pricing with free multi-year telemetry licenses"
       }
     ],
     "tags": [
@@ -164,24 +196,25 @@
       "dart",
       "pricing",
       "commercials",
-      "finance",
+      "mbr",
       "deals"
     ]
   },
   {
     "id": "ae_install_base_insights",
-    "title": "Customer Install Base & Aging Hardware Insights",
+    "title": "Customer Install Base & Aging Hardware (CSV Export)",
     "role": "Account Executive Spotlight",
     "category": "Account Intelligence & Refresh",
     "is_ae_top10": true,
     "target_bot": "my_agent",
     "bot_label": "My Agent (Skills & Tools)",
     "connectors": [
+      "Cisco Ready",
       "Installed Base API",
-      "Cisco Smart Net Total Care"
+      "Smart Net Total Care"
     ],
-    "description": "Analyzes a customer's Cisco hardware footprint to identify legacy devices, End-of-Sale (EoS), and End-of-Life (EoL) hardware ripe for refresh.",
-    "template": "Query the installed base records for customer {customer_name}. Identify: 1) Hardware assets reaching End-of-Sale (EoS) or End-of-Support (EoL) within the next {time_horizon}, 2) Total device count by product family (Catalyst, Nexus, Meraki, Security, UCS), 3) Uncovered assets without active SMARTnet / Solution Support, and 4) Recommended migration path to modern Cisco platforms (e.g., Catalyst 9000, Cisco Hypershield, Meraki). Summarize as an executive 1-page table.",
+    "description": "Queries customer inventory across ALL hardware and software in Cisco Ready. Outputs a comprehensive, structured CSV table of assets, serials, and EoS/EoL milestones.",
+    "template": "Query the complete customer inventory and installed base records in Cisco Ready for customer {customer_name}. Do not limit the search to specific product families; include all hardware, software, and appliances across the entire account footprint. Scope / Filter: {scope_filter}. EoS / EoL Horizon: {time_horizon}.\n\nOutput the entire inventory as a raw, comma-separated CSV block ready for copy/download with the following exact columns:\n\"Asset / Hostname\",\"Product Family\",\"Hardware Model / SKU\",\"Serial Number\",\"Site Location\",\"Install Date\",\"Current Support Status\",\"Contract Number\",\"End-of-Sale (EoS) Date\",\"End-of-Support (EoL) Date\",\"Recommended Modern Replacement\"",
     "fields": [
       {
         "name": "customer_name",
@@ -190,25 +223,31 @@
         "default": "Northern Health System"
       },
       {
+        "name": "scope_filter",
+        "label": "Inventory Scope / Sites",
+        "placeholder": "e.g. All global sites, Data Center only, Branch locations",
+        "default": "All deployed inventory across all sites"
+      },
+      {
         "name": "time_horizon",
-        "label": "EoL Time Horizon",
-        "placeholder": "e.g. 6 to 12 months, 18 months",
-        "default": "12 months"
+        "label": "EoS / EoL Horizon",
+        "placeholder": "e.g. All assets, Next 12 months, Already past EoL",
+        "default": "All assets reaching EoS or EoL within the next 18 months"
       }
     ],
     "tags": [
       "install base",
-      "ib",
+      "cisco ready",
+      "csv",
       "eol",
       "eos",
       "hardware refresh",
-      "catalyst",
-      "smartnet"
+      "inventory"
     ]
   },
   {
     "id": "ae_expiring_renewals",
-    "title": "Expiring Subscriptions & Service Contracts",
+    "title": "Expiring Subscriptions & Service Contracts (CSV Export)",
     "role": "Account Executive Spotlight",
     "category": "Renewals & Subscriptions",
     "is_ae_top10": true,
@@ -216,77 +255,119 @@
     "bot_label": "My Agent (Skills & Tools)",
     "connectors": [
       "CCW-R",
-      "Smart Net Total Care",
-      "Subscriptions Hub"
+      "Cisco Ready",
+      "Subscriptions Hub",
+      "My Business Reports (MBR)"
     ],
-    "description": "Finds upcoming Cisco software subscriptions, Enterprise Agreements (EA), and SMARTnet service contracts expiring within 90 to 180 days.",
-    "template": "Pull all active Cisco service contracts and software subscriptions expiring within {renewal_window} for account {customer_name}. Group by contract type: 1) Enterprise Agreement (EA) software suites (Cisco ONE / DNA / Security Choice), 2) Standalone SaaS (Duo, Umbrella, ThousandEyes, Splunk Cloud), and 3) SMARTnet / Technical Services contracts. Highlight total renewal dollar value, contract numbers, and any opportunity to co-term or consolidate into a single Cisco Enterprise Agreement.",
+    "description": "Pulls ALL service contracts, software subscriptions, Enterprise Agreements (EA), and SaaS expiring across the entire account, exported as a clean CSV table.",
+    "template": "Pull all active Cisco service contracts, hardware maintenance agreements, software subscriptions, and Enterprise Agreement (EA) suites expiring within {renewal_window} for account {customer_name}. Do not restrict to specific product suites; query all architectures in CCW-R, Cisco Ready, and Subscriptions Hub.\n\nOutput the results as a raw comma-separated CSV block with the following exact columns:\n\"Contract / Subscription ID\",\"Contract Type\",\"Product / Software Suite\",\"Architecture Family\",\"Service Level\",\"Start Date\",\"Expiration Date\",\"Days Remaining\",\"Annual Contract Value (USD)\",\"Renewal Partner\",\"Co-Term Consolidation Opportunity\"",
     "fields": [
       {
         "name": "customer_name",
         "label": "Customer Account Name",
-        "placeholder": "e.g. Apex Logistics",
-        "default": "Apex Logistics"
+        "placeholder": "e.g. Apex Logistics Corp",
+        "default": "Apex Logistics Corp"
       },
       {
         "name": "renewal_window",
-        "label": "Expiry Horizon",
-        "placeholder": "e.g. next 90 days, next 180 days, current fiscal year",
+        "label": "Renewal Expiry Horizon",
+        "placeholder": "e.g. next 90 days, next 120 days, next 180 days, full fiscal year",
         "default": "next 120 days"
       }
     ],
     "tags": [
       "renewals",
       "contracts",
+      "csv",
       "ea",
-      "smartnet",
       "subscriptions",
-      "duo",
-      "umbrella"
+      "ccw-r",
+      "cisco ready",
+      "mbr"
     ]
   },
   {
     "id": "ae_account_360",
-    "title": "Holistic Account 360 & CXO Strategy Brief",
+    "title": "Holistic Account 360 Overview",
     "role": "Account Executive Spotlight",
     "category": "Account Planning",
     "is_ae_top10": true,
     "target_bot": "circuit",
     "bot_label": "Circuit AI Chat",
     "connectors": [
+      "Cisco Ready",
+      "My Business Reports (MBR)",
       "Salesforce",
-      "Web Search",
-      "Outlook"
+      "Outlook",
+      "Internet Research"
     ],
-    "description": "Synthesizes annual reports, CXO priorities, recent corporate news, and Cisco relationship footprint into a strategic 1-page account plan.",
-    "template": "Build a comprehensive Account 360 Executive Dossier for {customer_name} targeting meetings with {cxo_persona}. Include: 1) Corporate Overview, recent earnings highlights, and key business strategic priorities, 2) Current known IT infrastructure footprint and public cloud posture, 3) Estimated Cisco wallet share vs competitors ({competitors}), 4) 3 high-impact strategic conversation starters aligning Cisco architectures (Secure Networking, Hybrid Cloud, AI-ready Infrastructure, Splunk Observability) to their business goals.",
+    "description": "Synthesizes customer historical spend from MBR, active inventory from Cisco Ready, open pipeline from Salesforce, and latest public news into an executive 360 dossier.",
+    "template": "Build a comprehensive Account 360 Strategic Overview for account {customer_name}. Target product families / architectures: {target_architectures}. Cross-reference data across: 1) Historical bookings, product adoption, and purchasing patterns in My Business Reports (MBR), 2) Current deployed footprint and uncovered assets from Cisco Ready, 3) Open pipeline opportunities and key decision-maker contacts in Salesforce, 4) Public web research on recent corporate news, earnings, and business priorities. Highlight Cisco wallet share vs competitors ({competitors}) and outline 3 high-impact conversation starters.",
     "fields": [
       {
         "name": "customer_name",
-        "label": "Account Name",
+        "label": "Customer Account Name",
         "placeholder": "e.g. Horizon Energy Group",
         "default": "Horizon Energy Group"
       },
       {
-        "name": "cxo_persona",
-        "label": "Target CXO Persona",
-        "placeholder": "e.g. CIO, CISO, VP Cloud Operations",
-        "default": "Chief Information Officer (CIO)"
+        "name": "target_architectures",
+        "label": "Target Architectures / Product Families",
+        "placeholder": "e.g. All Cisco architectures, or enter specific families like Security, Networking, Collaboration",
+        "default": "All Cisco architectures and software subscriptions"
       },
       {
         "name": "competitors",
         "label": "Incumbent Competitors",
-        "placeholder": "e.g. Palo Alto Networks, Fortinet, Arista",
-        "default": "Palo Alto Networks and Arista"
+        "placeholder": "e.g. Enter competitors or leave as 'All relevant market competitors'",
+        "default": "All relevant market competitors"
       }
     ],
     "tags": [
-      "account plan",
       "account 360",
-      "cxo",
-      "brief",
-      "sales strategy",
-      "research"
+      "account plan",
+      "mbr",
+      "cisco ready",
+      "salesforce",
+      "research",
+      "sales"
+    ]
+  },
+  {
+    "id": "ae_mbr_historical_spend",
+    "title": "MBR Historical Bookings & Revenue Trend Analysis",
+    "role": "Account Executive Spotlight",
+    "category": "Account Planning",
+    "is_ae_top10": true,
+    "target_bot": "my_agent",
+    "bot_label": "My Agent (Skills & Tools)",
+    "connectors": [
+      "My Business Reports (MBR)",
+      "Salesforce"
+    ],
+    "description": "Analyzes a customer's multi-year Cisco booking history, discounting trends, and software vs hardware ratios to identify buying cycles and whitespace.",
+    "template": "Query My Business Reports (MBR) for account {customer_name} over {historical_window}. Analyze: 1) Annual booking revenue trends and fiscal year seasonality, 2) Spend breakdown by architecture and software vs hardware mix, 3) Historical average discounting levels and CCW deal velocity, 4) Whitespace analysis: identify Cisco product families with zero or low penetration where peers in the same industry have high adoption.",
+    "fields": [
+      {
+        "name": "customer_name",
+        "label": "Customer Account Name",
+        "placeholder": "e.g. Global Logistics Inc",
+        "default": "Global Logistics Inc"
+      },
+      {
+        "name": "historical_window",
+        "label": "Lookback Period",
+        "placeholder": "e.g. last 3 fiscal years, past 5 years",
+        "default": "last 3 fiscal years"
+      }
+    ],
+    "tags": [
+      "mbr",
+      "bookings",
+      "revenue",
+      "trends",
+      "whitespace",
+      "sales strategy"
     ]
   },
   {
@@ -298,8 +379,9 @@
     "target_bot": "circuit",
     "bot_label": "Circuit AI Chat",
     "connectors": [
-      "Webex",
-      "Outlook"
+      "Webex Meetings",
+      "Outlook",
+      "Salesforce"
     ],
     "description": "Transforms messy meeting notes or transcripts into a polished executive customer email following Cisco Smart Brevity guidelines.",
     "template": "Transform the following customer call notes from our meeting with {customer_name} ({attendees}) into two deliverables: 1) A crisp, customer-facing follow-up email adhering to Smart Brevity (Executive TL;DR, Decisions Made, Clear Action Items with Owners and Target Dates, Next Meeting proposal), and 2) An internal deal update for Salesforce/account team summarizing deal stage progression and potential risks.\n\nCall Notes / Raw Transcript:\n{meeting_notes}",
@@ -320,7 +402,7 @@
         "name": "meeting_notes",
         "label": "Raw Meeting Notes / Bullet Points",
         "placeholder": "Paste your rough call notes or transcript here...",
-        "default": "Discussed WAN modernization. Customer frustrated with current MPLS cost. Looking at Cisco SD-WAN and Catalyst 8300. Needs demo by next Thursday. Mentioned Palo Alto is also bidding. Budget is approved for Q3."
+        "default": "Discussed modernization project. Customer frustrated with current legacy provider cost. Looking at Cisco platform solution. Needs demo by next Thursday. Budget is approved for Q3."
       }
     ],
     "tags": [
@@ -334,49 +416,49 @@
   },
   {
     "id": "ae_competitor_battlecard",
-    "title": "Competitive Battlecard & Talk Tracks",
+    "title": "Competitive Battlecard & Objection Killer",
     "role": "Account Executive Spotlight",
     "category": "Competitive Positioning",
     "is_ae_top10": true,
     "target_bot": "circuit",
     "bot_label": "Circuit AI Chat",
     "connectors": [
-      "Knowledge Base"
+      "Knowledge Base",
+      "Internet Research"
     ],
     "description": "Equips you with winning objection handlers, landmine questions, and architecture differentiators against key competitors.",
-    "template": "Generate an executive competitive battlecard comparing Cisco {cisco_solution} against {competitor_solution}. Structure as: 1) Executive Pitch: Why Cisco wins in 3 sentences, 2) Top 3 Architecture Differentiators (Total Cost of Ownership, security integration, management simplicity via Meraki/Catalyst Center/Splunk), 3) Competitor Weaknesses & Vulnerabilities, 4) 3 'Trap' questions to ask the customer to expose competitor shortcomings, 5) Fast objection handlers for: {objection_scenario}.",
+    "template": "Generate an executive competitive battlecard comparing Cisco {cisco_solution} against {competitor_solution}. Structure as: 1) Executive Pitch: Why Cisco wins in 3 sentences, 2) Top 3 Architecture Differentiators (Total Cost of Ownership, security integration, platform management simplicity), 3) Competitor Weaknesses & Vulnerabilities, 4) 3 'Trap' questions to ask the customer to expose competitor shortcomings, 5) Fast objection handlers for: {objection_scenario}.",
     "fields": [
       {
         "name": "cisco_solution",
-        "label": "Cisco Solution / Product",
-        "placeholder": "e.g. Cisco Secure Firewall & Hypershield, Meraki SD-WAN, Catalyst 9000",
-        "default": "Cisco Secure Firewall 3100 Series & Security Cloud Control"
+        "label": "Cisco Solution / Architecture",
+        "placeholder": "e.g. Cisco Secure Access, Cloud Networking, Splunk",
+        "default": "Cisco Secure Access SSE & Cloud Control"
       },
       {
         "name": "competitor_solution",
         "label": "Competitor & Solution",
-        "placeholder": "e.g. Palo Alto Networks PAN-OS Strata, Fortinet FortiGate",
-        "default": "Palo Alto Networks Strata / PA-1400 Series"
+        "placeholder": "e.g. Palo Alto Networks, Fortinet, Arista, Zscaler",
+        "default": "Palo Alto Networks Strata / Prisma"
       },
       {
         "name": "objection_scenario",
         "label": "Customer Objection / FUD",
-        "placeholder": "e.g. Customer says Palo Alto has better Layer 7 app control and single-pane UI",
-        "default": "Customer claims competitor has simpler single-vendor licensing and higher perceived Gartner magic quadrant rating"
+        "placeholder": "e.g. Customer says competitor has simpler licensing or lower upfront cost",
+        "default": "Customer claims competitor has simpler single-vendor licensing and lower upfront hardware cost"
       }
     ],
     "tags": [
       "battlecard",
       "competitor",
-      "palo alto",
-      "fortinet",
-      "arista",
-      "differentiation"
+      "objection",
+      "differentiation",
+      "sales"
     ]
   },
   {
     "id": "ae_rfp_questionnaire_responder",
-    "title": "RFP & Security Questionnaire Responder",
+    "title": "RFP & Technical Questionnaire Responder",
     "role": "Account Executive Spotlight",
     "category": "RFP & Technical Bids",
     "is_ae_top10": true,
@@ -384,7 +466,8 @@
     "bot_label": "Circuit AI Chat",
     "connectors": [
       "Trust Portal",
-      "Compliance Specs"
+      "Compliance Specs",
+      "Cisco Ready"
     ],
     "description": "Drafts authoritative, compliant answers for customer RFP requirements, compliance questions, and architecture bids.",
     "template": "Draft a formal, persuasive response to the following customer RFP requirement regarding Cisco {cisco_architecture}. Ensure the response: 1) Directly answers 'Compliant / Fully Supported', 2) Highlights Cisco's architectural advantages, scalability, and built-in security, 3) Cites relevant standards (FIPS, FedRAMP, ISO 27001, SOC2) where applicable, and 4) Remains concise and buyer-focused.\n\nRFP Requirement Question:\n\"{rfp_question}\"",
@@ -392,7 +475,7 @@
       {
         "name": "cisco_architecture",
         "label": "Cisco Architecture / Product",
-        "placeholder": "e.g. Cisco Secure Access (SSE), ThousandEyes, Catalyst Center",
+        "placeholder": "e.g. Cisco Secure Access, Cloud Networking, Duo MFA",
         "default": "Cisco Secure Access (Security Service Edge - SSE) & Duo MFA"
       },
       {
@@ -420,11 +503,12 @@
     "target_bot": "circuit",
     "bot_label": "Circuit AI Chat",
     "connectors": [
-      "PowerPoint",
-      "Adoption Telemetry"
+      "My Business Reports (MBR)",
+      "Cisco Ready",
+      "PowerPoint"
     ],
     "description": "Builds a high-impact, 8-slide Quarterly Business Review (QBR) presentation outline showcasing customer ROI, telemetry adoption, and roadmap.",
-    "template": "Generate an 8-slide Executive Business Review (EBR/QBR) outline for customer {customer_name}. Objectives: {meeting_goal}. Primary Cisco solutions deployed: {deployed_solutions}. For each slide, provide: Slide Title, Core Message (headline), 3-4 bullet points of substance, Recommended Visual or Data Chart, and Speaker Talking Track for the Account Executive.",
+    "template": "Generate an 8-slide Executive Business Review (EBR/QBR) outline for customer {customer_name}. Objectives: {meeting_goal}. Primary Cisco solutions deployed: {deployed_solutions}. Incorporate historical adoption trends from Cisco Ready and booking context from My Business Reports (MBR). For each slide, provide: Slide Title, Core Message (headline), 3-4 bullet points of substance, Recommended Visual or Data Chart, and Speaker Talking Track for the Account Executive.",
     "fields": [
       {
         "name": "customer_name",
@@ -435,14 +519,14 @@
       {
         "name": "meeting_goal",
         "label": "Meeting Objective",
-        "placeholder": "e.g. Celebrate Phase 1 success, position Enterprise Agreement expansion into Security",
-        "default": "Review year-1 network modernization metrics, highlight 99.999% uptime, and align on expansion to Cisco Enterprise Agreement for Security Cloud"
+        "placeholder": "e.g. Review Year-1 milestones, position Enterprise Agreement expansion",
+        "default": "Review year-1 modernization metrics, highlight 99.999% uptime, and align on expansion to Cisco Enterprise Agreement"
       },
       {
         "name": "deployed_solutions",
         "label": "Deployed Solutions",
-        "placeholder": "e.g. Catalyst 9000, Cisco DNA Center, Meraki Wireless",
-        "default": "Catalyst 9300 campus switches, Catalyst Center, and Cisco Identity Services Engine (ISE)"
+        "placeholder": "e.g. Enterprise Networking, Security, Collaboration",
+        "default": "Enterprise Campus Networking and Identity Services"
       }
     ],
     "tags": [
@@ -451,19 +535,22 @@
       "presentation",
       "slides",
       "executive",
-      "deck"
+      "deck",
+      "mbr"
     ]
   },
   {
     "id": "ae_cxo_outreach",
-    "title": "Targeted CXO Strategic Outreach Pitch",
+    "title": "Targeted Executive Strategic Outreach Pitch",
     "role": "Account Executive Spotlight",
     "category": "Outreach & Prospecting",
     "is_ae_top10": true,
     "target_bot": "circuit",
     "bot_label": "Circuit AI Chat",
     "connectors": [
-      "Outlook"
+      "Outlook",
+      "Internet Research",
+      "Salesforce"
     ],
     "description": "Crafts high-converting, personalized cold or warm outreach emails to executive leaders following Cisco Smart Brevity.",
     "template": "Write a high-impact, 120-word executive outreach email to {executive_name}, {executive_title} at {target_company}. Context / Trigger Event: {trigger_event}. Cisco Value Proposition: {cisco_value_prop}. Follow Smart Brevity guidelines: 1) One sentence hook acknowledging their specific challenge/milestone, 2) 'Why it matters' in one punchy bullet, 3) How Cisco helped a peer customer achieve {peer_metric}, 4) Low-friction call to action requesting a 15-minute briefing.",
@@ -489,14 +576,14 @@
       {
         "name": "trigger_event",
         "label": "Trigger Event / Context",
-        "placeholder": "e.g. Recent hospital merger and announced cloud migration",
-        "default": "Recent hospital system acquisition requiring rapid network segmentation and HIPAA compliance"
+        "placeholder": "e.g. Recent acquisition requiring rapid network segmentation",
+        "default": "Recent corporate acquisition requiring rapid network segmentation and compliance"
       },
       {
         "name": "cisco_value_prop",
         "label": "Cisco Solution Angle",
-        "placeholder": "e.g. Cisco Hypershield AI-native segmentation and Duo MFA",
-        "default": "Cisco Hypershield autonomous micro-segmentation and Secure Access SSE"
+        "placeholder": "e.g. Cisco AI-native segmentation and Secure Access",
+        "default": "Cisco autonomous micro-segmentation and Secure Access"
       },
       {
         "name": "peer_metric",
@@ -525,20 +612,14 @@
       "Outlook",
       "Webex"
     ],
-    "description": "Scans your last 24 to 48 hours of emails and Webex messages to surface items requiring decisions and drafts concise replies.",
-    "template": "Scan the last {timeframe} of my Outlook inbox and Webex direct messages/spaces. Surface only what needs an active decision or reply, ranked by urgency. For the top {count} items, draft concise, Smart Brevity replies ready for my review.",
+    "description": "Scans your last 24 to 48 hours of emails and Webex messages to surface a clean summary of what was missed, items requiring attention, and pending user actions.",
+    "template": "Scan the last {timeframe} of my Outlook inbox and Webex direct messages and group spaces. Provide a clear executive summary of: 1) What critical updates or announcements I missed, 2) Items requiring my urgent attention or pending decision, 3) Questions or messages waiting on my response, 4) Upcoming deadlines or scheduled meetings in the next 24 hours. Do not draft full email replies; organize into prioritized, bulleted checklists with sender names, context, and required action.",
     "fields": [
       {
         "name": "timeframe",
         "label": "Time Window",
         "placeholder": "e.g. 24 hours, 48 hours",
         "default": "24 hours"
-      },
-      {
-        "name": "count",
-        "label": "Drafts to Prepare",
-        "placeholder": "e.g. 3, 5",
-        "default": "3"
       }
     ],
     "tags": [
@@ -661,7 +742,7 @@
   },
   {
     "id": "wp_pto_catchup",
-    "title": "Catch-Up After PTO or Leave",
+    "title": "Post-PTO / Vacation Catch-Up Briefing",
     "role": "Workplace Productivity (Everyone)",
     "category": "Inbox & Message Triage",
     "target_bot": "my_agent",
@@ -670,20 +751,14 @@
       "Outlook",
       "Webex"
     ],
-    "description": "Synthesizes everything you missed while out of office, filtering out chatter to surface only high-priority updates.",
-    "template": "I was away on leave for {leave_period}. Scan my Outlook inbox and Webex space notifications during this period. Provide an executive summary of: 1) Major project status changes or announcements, 2) Critical decisions made by my team, 3) Direct mentions where my input is still blocking progress, 4) Draft replies for the top {reply_count} most urgent threads.",
+    "description": "Checks My Workday PTO records and scans all communications over your absence to provide a comprehensive briefing of what happened while away.",
+    "template": "I was away on leave for {days_off} days. Check my approved PTO records in My Workday and scan my Outlook inbox and Webex customer spaces over this absence window. Generate a comprehensive return-to-office executive briefing: 1) Major project status changes, decisions, or milestones that occurred while away, 2) Escalations or critical issues handled by coverage teammates, 3) Pending approvals or inquiries awaiting my return, 4) Top 5 priority action items I must tackle on Day 1.",
     "fields": [
       {
-        "name": "leave_period",
-        "label": "Absence Duration",
-        "placeholder": "e.g. past week, last 3 days",
-        "default": "the past week"
-      },
-      {
-        "name": "reply_count",
-        "label": "Draft Replies Count",
-        "placeholder": "e.g. 3, 5",
-        "default": "3"
+        "name": "days_off",
+        "label": "Days Out of Office",
+        "placeholder": "e.g. 3, 5, 10, 14",
+        "default": "5"
       }
     ],
     "tags": [

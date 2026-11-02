@@ -28,15 +28,10 @@ class PromptBuilder {
       }
     });
 
-    // Dual action button listeners
+    // Action button listeners
     const copyBtn = document.getElementById('builder-copy-btn');
     if (copyBtn) {
       copyBtn.addEventListener('click', () => this.handleCopy());
-    }
-
-    const webexBtn = document.getElementById('builder-webex-btn');
-    if (webexBtn) {
-      webexBtn.addEventListener('click', () => this.handleOpenWebex());
     }
 
     const copyWebexBtn = document.getElementById('builder-copy-webex-btn');
@@ -111,7 +106,7 @@ class PromptBuilder {
         const group = document.createElement('div');
         group.className = 'form-group';
 
-        const isLongText = field.default && field.default.length > 60;
+        const isLongText = (field.default && field.default.length > 60) || field.name.includes('notes') || field.name.includes('question') || field.name.includes('threat');
         const inputHtml = isLongText
           ? `<textarea class="form-textarea" data-var="${field.name}" placeholder="${this._escapeHtml(field.placeholder || '')}" rows="3">${this._escapeHtml(this.fieldValues[field.name])}</textarea>`
           : `<input type="text" class="form-input" data-var="${field.name}" placeholder="${this._escapeHtml(field.placeholder || '')}" value="${this._escapeHtml(this.fieldValues[field.name])}">`;
@@ -152,11 +147,30 @@ class PromptBuilder {
   }
 
   /**
-   * Replaces variables in the prompt template with current input values
+   * Replaces variables in the prompt template with current input values.
+   * If asHtml is true, wraps replaced variables in a glowing highlight tag.
    */
-  getGeneratedPromptText() {
+  getGeneratedPromptText(asHtml = false) {
     if (!this.currentPrompt || !this.currentPrompt.template) return '';
     let result = this.currentPrompt.template;
+
+    if (asHtml) {
+      // First escape the base template to prevent XSS
+      result = this._escapeHtml(result);
+
+      // Now substitute highlighted spans
+      for (const [key, val] of Object.entries(this.fieldValues)) {
+        const hasVal = val && val.trim() !== '';
+        const displayVal = hasVal ? this._escapeHtml(val) : `{${key}}`;
+        const cls = hasVal ? 'var-highlight' : 'var-highlight var-empty';
+        const replacement = `<span class="${cls}">${displayVal}</span>`;
+        const regex = new RegExp(`\\{${key}\\}`, 'g');
+        result = result.replace(regex, replacement);
+      }
+      return result;
+    }
+
+    // Plain text mode for clipboard copying
     for (const [key, val] of Object.entries(this.fieldValues)) {
       const replacement = val && val.trim() !== '' ? val : `{${key}}`;
       const regex = new RegExp(`\\{${key}\\}`, 'g');
@@ -168,12 +182,12 @@ class PromptBuilder {
   updateLivePreview() {
     const previewEl = document.getElementById('builder-preview-text');
     if (previewEl) {
-      previewEl.textContent = this.getGeneratedPromptText();
+      previewEl.innerHTML = this.getGeneratedPromptText(true);
     }
   }
 
   async handleCopy() {
-    const text = this.getGeneratedPromptText();
+    const text = this.getGeneratedPromptText(false);
     const success = await copyToClipboard(text);
     if (success) {
       showToast('Prompt copied to clipboard!', 'success');
@@ -182,16 +196,8 @@ class PromptBuilder {
     }
   }
 
-  handleOpenWebex() {
-    if (!this.currentPrompt) return;
-    const botKey = this.currentPrompt.target_bot || 'circuit';
-    const botMeta = WEBEX_BOTS[botKey] || WEBEX_BOTS.circuit;
-    openWebexBot(botKey);
-    showToast(`Launching Webex chat with ${botMeta.name}...`, 'info');
-  }
-
   async handleCopyAndOpenWebex() {
-    const text = this.getGeneratedPromptText();
+    const text = this.getGeneratedPromptText(false);
     await copyToClipboard(text);
     if (!this.currentPrompt) return;
     const botKey = this.currentPrompt.target_bot || 'circuit';
