@@ -13,7 +13,7 @@ A high-performance, mobile-responsive Material Design 3 web application crafted 
 2. **Onboarding Wizard & Account Executive Spotlight:**
    - First-time visitor onboarding dialog asks: *"Are you an Account Executive / Sales Leader?"*
    - **Account Executive Mode:** Instantly filters to the **Top 12 AE Prompts** (Mailbox & Webex triage, My Performance Review check-ins, Concur/Performance Review approvals, CCW deal discount justification, customer install base insights, renewal contracts, and account 360 dossiers).
-   - **Full Catalog Mode:** Explore all Cisco roles (Engineering, Network Operations, Customer Success & Support, Marketing, HR, Finance).
+   - **Full Catalog Mode:** Explore all Cisco employee roles (Workplace Productivity, Sales & Renewals, People Leaders & HR, Marketing, and Finance).
    - Prominent **"Restart Wizard"** button in the top navigation bar lets users change their view anytime.
 
 3. **Freeform Text Inputs (Zero Dropdowns):**

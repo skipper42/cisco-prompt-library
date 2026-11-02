@@ -144,7 +144,7 @@ class App {
       if (roleChipsContainer) roleChipsContainer.style.display = 'none';
     } else {
       if (bannerTitle) bannerTitle.textContent = 'Cisco Full Workforce AI Library';
-      if (bannerDesc) bannerDesc.textContent = 'Consolidated, high-impact prompts for Engineering, Operations, Customer Success, TAC, HR & Finance.';
+      if (bannerDesc) bannerDesc.textContent = 'Consolidated, high-impact prompts for Workplace Productivity, Sales, People Leaders, Marketing & Finance.';
       if (bannerBtn) bannerBtn.textContent = 'Switch to Account Executive Top 12';
       if (roleChipsContainer) roleChipsContainer.style.display = 'flex';
     }
