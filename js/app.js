@@ -1,6 +1,6 @@
 /**
  * Cisco AI Prompt Navigator — Main App Controller
- * Orchestrates wizard, filters, card rendering, and theme management with Modern SaaS UI.
+ * Orchestrates wizard, filters, card rendering, and theme management with Full Dual-Theme Support.
  */
 
 import { store } from './prompts-store.js';
@@ -18,7 +18,7 @@ class App {
   }
 
   async init() {
-    // Theme setup (default dark modern SaaS)
+    // Theme setup (default dark modern SaaS, adapts to saved preference)
     const savedTheme = store.getTheme();
     store.setTheme(savedTheme);
     this.setupThemeToggle();
@@ -65,6 +65,7 @@ class App {
       const next = current === 'dark' ? 'light' : 'dark';
       store.setTheme(next);
       this.updateThemeIcon(next);
+      this.render();
     });
 
     this.updateThemeIcon(store.getTheme());
@@ -76,7 +77,7 @@ class App {
     if (theme === 'dark') {
       iconContainer.innerHTML = `<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>`;
     } else {
-      iconContainer.innerHTML = `<i data-lucide="moon" class="w-4 h-4 text-cyan-500"></i>`;
+      iconContainer.innerHTML = `<i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>`;
     }
     if (window.lucide) {
       lucide.createIcons();
@@ -284,12 +285,12 @@ class App {
 
     if (filtered.length === 0) {
       gridEl.innerHTML = `
-        <div class="col-span-full p-12 text-center rounded-2xl bg-slate-900/60 dynamic-blur border border-white/10">
-          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+        <div class="col-span-full p-12 text-center rounded-2xl bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 shadow-sm">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
             <i data-lucide="search-x" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-base font-bold text-white tracking-tight">No matching prompts found</h3>
-          <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Try adjusting your search query, selecting another category, or resetting filters.</p>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white tracking-tight">No matching prompts found</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">Try adjusting your search query, selecting another category, or resetting filters.</p>
         </div>
       `;
       if (window.lucide) lucide.createIcons();
@@ -350,44 +351,44 @@ class App {
       : '';
 
     return `
-      <div class="prompt-card group relative p-5 rounded-2xl bg-slate-900/60 dynamic-blur border border-white/10 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col justify-between" data-id="${prompt.id}">
+      <div class="prompt-card group relative p-5 rounded-2xl bg-white/90 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-white/10 hover:border-cyan-500/60 dark:hover:border-cyan-500/40 shadow-sm dark:shadow-none hover:shadow-xl dark:hover:shadow-cyan-500/10 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between" data-id="${prompt.id}">
         <div class="prompt-card-clickable cursor-pointer flex-1 flex flex-col">
           <div class="flex items-center justify-between gap-2 mb-3">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium ${
               isCircuit 
-                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' 
-                : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                ? 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20' 
+                : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20'
             }">
-              <span class="w-1.5 h-1.5 rounded-full ${isCircuit ? 'bg-cyan-400 animate-pulse' : 'bg-emerald-400'}"></span>
+              <span class="w-1.5 h-1.5 rounded-full ${isCircuit ? 'bg-cyan-500 dark:bg-cyan-400 animate-pulse' : 'bg-emerald-500 dark:bg-emerald-400'}"></span>
               ${botMeta.name}
             </span>
-            <span class="text-[11px] font-medium text-slate-400 px-2 py-0.5 rounded-full bg-slate-800/80 border border-white/5">
+            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/5">
               ${this._escapeHtml(prompt.category || 'General')}
             </span>
           </div>
 
-          <h3 class="font-bold text-base tracking-tight text-white group-hover:text-cyan-400 transition-colors mb-2 leading-snug">
+          <h3 class="font-bold text-base tracking-tight text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors mb-2 leading-snug">
             ${this._escapeHtml(prompt.title)}
           </h3>
 
-          <p class="text-xs text-slate-400 leading-relaxed mb-4 flex-1">
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4 flex-1">
             ${this._escapeHtml(prompt.description || '')}
           </p>
 
           ${connectorsHtml}
         </div>
 
-        <div class="pt-3 border-t border-white/5 flex items-center justify-between gap-2 mt-auto">
+        <div class="pt-3 border-t border-slate-200/80 dark:border-white/5 flex items-center justify-between gap-2 mt-auto">
           <button class="use-prompt-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all hover:shadow-lg hover:shadow-cyan-500/20" title="Customize variables and preview prompt">
             <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
             <span>Use Prompt</span>
           </button>
 
           <div class="flex items-center gap-1.5">
-            <button class="quick-copy-btn p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/10 transition-colors" title="Copy raw prompt template" aria-label="Copy prompt">
+            <button class="quick-copy-btn p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors" title="Copy raw prompt template" aria-label="Copy prompt">
               <i data-lucide="copy" class="w-3.5 h-3.5"></i>
             </button>
-            <button class="quick-copy-webex-btn p-2 rounded-xl bg-slate-800 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 transition-colors" title="Copy & Open Webex (${botMeta.name})" aria-label="Copy & Open Webex">
+            <button class="quick-copy-webex-btn p-2 rounded-xl bg-slate-100 hover:bg-cyan-50 dark:bg-slate-800 dark:hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-slate-200 dark:border-cyan-500/30 transition-colors" title="Copy & Open Webex (${botMeta.name})" aria-label="Copy & Open Webex">
               <i data-lucide="send" class="w-3.5 h-3.5"></i>
             </button>
           </div>

@@ -136,28 +136,31 @@ class DbEditor {
 
     tableBody.innerHTML = filtered.map(p => {
       const botName = p.target_bot === 'my_agent' ? 'My Agent' : 'Circuit';
-      const badgeType = p.target_bot === 'my_agent' ? 'agent' : 'circuit';
-      const customTag = p.is_custom ? '<span style="font-size:0.68rem; background:rgba(4,159,217,0.15); color:var(--md-sys-color-primary); padding:2px 6px; border-radius:4px; margin-left:4px;">Custom</span>' : '';
+      const customTag = p.is_custom ? '<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20 ml-1">Custom</span>' : '';
 
       return `
-        <tr>
-          <td>
-            <div style="font-weight: 600; color: var(--md-sys-color-on-surface);">
+        <tr class="hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors">
+          <td class="py-3 px-4">
+            <div class="font-semibold text-slate-900 dark:text-white">
               ${this._escapeHtml(p.title)} ${customTag}
             </div>
-            <div style="font-size: 0.75rem; color: var(--md-sys-color-outline); margin-top: 2px;">
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
               ${this._escapeHtml(p.category || 'General')}
             </div>
           </td>
-          <td>${this._escapeHtml(p.role || 'General')}</td>
-          <td>
-            <span class="bot-badge ${badgeType}">${botName}</span>
+          <td class="py-3 px-4 text-slate-600 dark:text-slate-300">${this._escapeHtml(p.role || 'General')}</td>
+          <td class="py-3 px-4">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium ${
+              p.target_bot === 'my_agent'
+                ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20'
+                : 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20'
+            }">${botName}</span>
           </td>
-          <td style="text-align: right; white-space: nowrap;">
-            <button class="btn btn-outlined btn-sm edit-prompt-btn" data-id="${p.id}" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
+          <td class="py-3 px-4 text-right whitespace-nowrap space-x-1">
+            <button class="edit-prompt-btn px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium border border-slate-200 dark:border-white/10 transition-colors" data-id="${p.id}">
               Edit
             </button>
-            <button class="btn btn-text btn-sm delete-prompt-btn" data-id="${p.id}" style="padding: 0.25rem 0.6rem; font-size: 0.78rem; color: var(--md-sys-color-error);">
+            <button class="delete-prompt-btn px-2.5 py-1 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 text-xs font-medium transition-colors" data-id="${p.id}">
               Delete
             </button>
           </td>

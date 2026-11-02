@@ -1,10 +1,10 @@
 /**
  * Cisco AI Prompt Navigator — Modern SaaS Design Tokens
- * Blends Cisco Enterprise Electric Cyan (#00bceb) & Bridge Blue (#049fd9) with deep slate canvas physics.
+ * Baseline: Crisp Light Mode (#f8fafc)
+ * Override: html.dark, [data-theme="dark"] for Deep Slate Dark Mode (#020617)
  */
 
-:root,
-[data-theme="dark"] {
+:root {
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Roboto Mono', 'SF Mono', Consolas, monospace;
@@ -14,13 +14,51 @@
   --cisco-cyan: #00bceb;
   --cisco-navy: #08162b;
   --cisco-deep: #020617;
+  --brand-rgb: 0, 159, 217;
+
+  /* Core Canvas & Surfaces (Light Mode Baseline) */
+  --bg-canvas: #f8fafc;
+  --bg-surface: rgba(255, 255, 255, 0.92);
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-inset: #f1f5f9;
+  --bg-modal: #ffffff;
+  --scrim-color: rgba(15, 23, 42, 0.45);
+
+  /* Clean Borders */
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --border-brand: rgba(0, 159, 217, 0.50);
+
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-brand: #049fd9;
+
+  /* Ambient Glow Physics */
+  --glow-opacity: 0.06;
+  --surface-blur: 12px;
+
+  /* Legacy Variable Fallbacks */
+  --md-sys-color-background: var(--bg-canvas);
+  --md-sys-color-surface: var(--bg-surface);
+  --md-sys-color-on-surface: var(--text-primary);
+  --md-sys-color-primary: var(--cisco-blue);
+  --md-sys-color-outline: var(--text-muted);
+}
+
+html.dark,
+[data-theme="dark"] {
+  /* Cisco Enterprise Palette */
   --brand-rgb: 0, 188, 235;
 
-  /* Core Canvas & Surfaces (Dark Mode Default) */
+  /* Core Canvas & Surfaces (Dark Mode) */
   --bg-canvas: #020617;
   --bg-surface: rgba(15, 23, 42, 0.65);
-  --bg-surface-elevated: rgba(30, 41, 59, 0.75);
+  --bg-surface-elevated: rgba(30, 41, 59, 0.85);
   --bg-surface-inset: #020617;
+  --bg-modal: rgba(15, 23, 42, 0.98);
+  --scrim-color: rgba(2, 6, 23, 0.75);
 
   /* Translucent Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
@@ -42,30 +80,5 @@
   --md-sys-color-surface: var(--bg-surface);
   --md-sys-color-on-surface: var(--text-primary);
   --md-sys-color-primary: var(--cisco-cyan);
-  --md-sys-color-outline: var(--text-muted);
-}
-
-[data-theme="light"] {
-  --bg-canvas: #f8fafc;
-  --bg-surface: rgba(255, 255, 255, 0.85);
-  --bg-surface-elevated: #ffffff;
-  --bg-surface-inset: #f1f5f9;
-
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-medium: rgba(0, 0, 0, 0.12);
-  --border-brand: rgba(0, 188, 235, 0.50);
-
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --text-brand: #049fd9;
-
-  --glow-opacity: 0.08;
-  --surface-blur: 12px;
-
-  --md-sys-color-background: var(--bg-canvas);
-  --md-sys-color-surface: var(--bg-surface);
-  --md-sys-color-on-surface: var(--text-primary);
-  --md-sys-color-primary: var(--cisco-blue);
   --md-sys-color-outline: var(--text-muted);
 }
