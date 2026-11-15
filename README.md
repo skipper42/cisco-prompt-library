@@ -59,7 +59,6 @@ apps/cisco-prompt-library/
 ├── assets/
 │   ├── cisco-logo.svg         # Official Cisco vector bridge logo
 │   └── cisco-logo.png         # Cisco logo PNG fallback
-├── .gitlab-ci.yml             # Automated GitLab Pages deployment pipeline
 └── README.md                  # Project documentation
 ```
 
@@ -72,6 +71,9 @@ python3 -m http.server 8080
 ```
 Open `http://localhost:8080` in your web browser.
 
-## Deployment to GitLab Pages
+## Deployment to GitHub & GitHub Pages
 
-Push this repository to GitLab. The included `.gitlab-ci.yml` pipeline automatically builds the `public/` directory and deploys it to your GitLab Pages URL.
+Managed via the `github` skill (`git@github.com:skipper42/cisco-prompt-library.git`). Publish or update static pages via:
+```bash
+github-tool publish-pages /home/agent/dumbledore/apps/cisco-prompt-library "cisco-prompt-library"
+```
